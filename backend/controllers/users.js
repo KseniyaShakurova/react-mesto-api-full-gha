@@ -8,7 +8,6 @@ const NotFound = require('../errors/NotFound');
 
 const ConflictError = require('../errors/ConflictError');
 const newError = require('../middlewares/newError');
-// const Unauthorized = require('../errors/Unauthorized');
 
 const NotError = 200;
 
