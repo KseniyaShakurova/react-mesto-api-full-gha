@@ -1,0 +1,18 @@
+.group__btn-remove {
+    background-image: url(../../../images/urn.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    cursor: pointer;
+    transition: opacity 1s ease;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 18px;
+    height: 19px;
+    border: none;
+    background-color:rgba(0, 0, 0 ,0);
+}
+
+.group__btn-remove:hover {
+   opacity: 0.6;
+}
