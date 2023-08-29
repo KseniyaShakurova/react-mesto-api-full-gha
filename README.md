@@ -9,7 +9,7 @@
 
 ## Ссылки на проект
 
-IP-адрес 158.160.63.129
+IP 158.160.63.129
 
 Frontend https://shakurovak.nomoredomainsicu.ru
 
