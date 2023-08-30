@@ -193,7 +193,7 @@ function App() {
           console.log("401 — Переданный токен некорректен");
         });
     }
-  }, []);
+  }, [history]);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
