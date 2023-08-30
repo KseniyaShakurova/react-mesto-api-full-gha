@@ -43,7 +43,7 @@ class Auth {
   }
 }
 
-const authApi = new Auth("https://auth.nomoreparties.co");
+const authApi = new Auth("https://api.shakurovak.nomoredomainsicu.ru");
 export default authApi;
 
    
