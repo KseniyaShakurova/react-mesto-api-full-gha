@@ -182,10 +182,10 @@ function App() {
       authApi
         .checkToken(token)
         .then((data) => {
-          if(data) {
+          if(data.token) {
           setIsLoggedIn(true);
           api._token = token;
-          localStorage.setItem('token', token);
+          localStorage.setItem('jwt', data.token);
           //setUserEmail(res.data.email);
           history.push("/");
           return data.json()
