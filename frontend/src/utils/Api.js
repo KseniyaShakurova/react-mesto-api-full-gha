@@ -58,7 +58,7 @@ export default class Api {
     }).then(this._handleResponse);
   }
 
-  disLike(data) {
+  disLike(data, token) {
     return fetch(`${this._baseUrl}/cards/${data}/likes`, {
       method: "DELETE",
       headers: {
@@ -67,7 +67,7 @@ export default class Api {
     }).then(this._handleResponse);
   }
 
-  deleteCard(data) {
+  deleteCard(data, token) {
     return fetch(`${this._baseUrl}/cards/${data}`, {
       method: "DELETE",
       headers: {
