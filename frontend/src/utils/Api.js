@@ -73,6 +73,9 @@ export default class Api {
 }
 const api = new Api({
   baseUrl: "https://api.shakurovak.nomoredomainsicu.ru",
+  headers: {
+    'Content-Type': 'application/json',
+  },
 });
 
 export { api };
