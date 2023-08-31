@@ -72,11 +72,7 @@ export default class Api {
   
 }
 const api = new Api({
-  baseUrl: "https://mesto.nomoreparties.co/v1/cohort-66",
-  headers: {
-    authorization: "aa98c8c5-50a3-4af7-9387-defe134c3e66",
-    "Content-Type": "application/json",
-  },
+  baseUrl: "https://api.shakurovak.nomoredomainsicu.ru",
 });
 
 export { api };
