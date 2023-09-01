@@ -55,12 +55,11 @@ function App() {
     setInfoToolTipPopupOpen(false);
   }
 
-  function handleCardLike(card) {
-    const jwt = localStorage.getItem("jwt");
+  function handleCardLike(card, token) {
     const isLiked = card.likes.some((i) => i._id === currentUser._id);
     if (!isLiked) {
       api
-        .likeCard(card._id, jwt, !isLiked)
+        .likeCard(card._id, token, !isLiked)
         .then((newCard) => {
           setCards((state) =>
             state.map((c) => (c._id === card._id ? newCard : c))
@@ -79,10 +78,9 @@ function App() {
     }
   }
 
-  function handleCardDelete(card) {
-    const jwt = localStorage.getItem("jwt");
+  function handleCardDelete(card, token) {
     api
-      .deleteCard(card._id, jwt)
+      .deleteCard(card._id, token)
       .then((newCard) => {
         const newCards = cards.filter((c) =>
           c._id === card._id ? "" : newCard
@@ -92,10 +90,10 @@ function App() {
       .catch((err) => console.log(err));
   }
 
-  function handleAddPlaceSubmit(name, link) {
+  function handleAddPlaceSubmit(name, link, token) {
 
     api
-      .createNewCard(name, link)
+      .createNewCard(name, link, token)
       .then((newCard) => {
         setCards([newCard, ...cards]);
         closeAllPopups();
@@ -103,19 +101,17 @@ function App() {
       .catch((err) => console.log(err));
   }
 
-  function handleUpdateUser(data) {
-    const jwt = localStorage.getItem("jwt");
-    api.setUserInfo(data, jwt).then((res) => {
+  function handleUpdateUser(data, token) {
+    api.setUserInfo(data, token).then((res) => {
       setCurrentUser(res);
       closeAllPopups();
     })
     .catch((err) => console.log(err));
   }
 
-  function handleUpdateAvatar(data) {
-    const jwt = localStorage.getItem("jwt");
+  function handleUpdateAvatar(data, token) {
     api
-      .updateAvatar(data, jwt)
+      .updateAvatar(data, token)
       .then((res) => {
         setCurrentUser(res);
         closeAllPopups();
@@ -123,9 +119,8 @@ function App() {
       .catch((err) => console.log(err));
   }
 
-  useEffect(() => {
-    const jwt = localStorage.getItem("jwt");
-    Promise.all([api.getUserInfo(jwt), api.getInitialCards(jwt)])
+  useEffect((token) => {
+    Promise.all([api.getUserInfo(token), api.getInitialCards(token)])
       .then(([data, cards]) => {
         setCurrentUser(data);
         setCards(cards);
