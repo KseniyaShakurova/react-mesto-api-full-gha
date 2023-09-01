@@ -55,11 +55,11 @@ function App() {
     setInfoToolTipPopupOpen(false);
   }
 
-  function handleCardLike(card, token) {
+  function handleCardLike(card) {
     const isLiked = card.likes.some((i) => i._id === currentUser._id);
     if (!isLiked) {
       api
-        .likeCard(card._id, token, !isLiked)
+        .likeCard(card._id, !isLiked)
         .then((newCard) => {
           setCards((state) =>
             state.map((c) => (c._id === card._id ? newCard : c))
@@ -68,7 +68,7 @@ function App() {
         .catch((err) => console.log(err));
     } else {
       api
-        .disLike(card._id, token, !isLiked)
+        .disLike(card._id, !isLiked)
         .then((newCard) => {
           setCards((state) =>
             state.map((c) => (c._id === card._id ? newCard : c))
@@ -78,9 +78,9 @@ function App() {
     }
   }
 
-  function handleCardDelete(card, token) {
+  function handleCardDelete(card) {
     api
-      .deleteCard(card._id, token)
+      .deleteCard(card._id)
       .then((newCard) => {
         const newCards = cards.filter((c) =>
           c._id === card._id ? "" : newCard
@@ -90,10 +90,10 @@ function App() {
       .catch((err) => console.log(err));
   }
 
-  function handleAddPlaceSubmit(name, link, token) {
+  function handleAddPlaceSubmit(name, link) {
 
     api
-      .createNewCard(name, link, token)
+      .createNewCard(name, link)
       .then((newCard) => {
         setCards([newCard, ...cards]);
         closeAllPopups();
@@ -101,17 +101,17 @@ function App() {
       .catch((err) => console.log(err));
   }
 
-  function handleUpdateUser(data, token) {
-    api.setUserInfo(data, token).then((res) => {
+  function handleUpdateUser(data) {
+    api.setUserInfo(data).then((res) => {
       setCurrentUser(res);
       closeAllPopups();
     })
     .catch((err) => console.log(err));
   }
 
-  function handleUpdateAvatar(data, token) {
+  function handleUpdateAvatar(data) {
     api
-      .updateAvatar(data, token)
+      .updateAvatar(data)
       .then((res) => {
         setCurrentUser(res);
         closeAllPopups();
@@ -119,8 +119,8 @@ function App() {
       .catch((err) => console.log(err));
   }
 
-  useEffect((token) => {
-    Promise.all([api.getUserInfo(token), api.getInitialCards(token)])
+  useEffect(() => {
+    Promise.all([api.getUserInfo(), api.getInitialCards()])
       .then(([data, cards]) => {
         setCurrentUser(data);
         setCards(cards);
