@@ -201,11 +201,12 @@ function App() {
 
   useEffect(() => { 
     if (localStorage.jwt) { 
-      checkToken(localStorage.jwt) 
+      authApi
+      .checkToken(localStorage.jwt) 
         .then((res) => { 
           setUserEmail(res.data.email) 
           setIsLoggedIn(true) 
-          navigate('/') 
+          history('/') 
         }) 
         .catch((error) => { 
           console.error(`Ошибка последующего входа ${error}`) 
