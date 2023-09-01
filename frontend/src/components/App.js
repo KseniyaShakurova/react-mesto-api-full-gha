@@ -178,14 +178,14 @@ function App() {
   }
 
   useEffect(() => {
-    const jwt = localStorage.getItem("jwt");
-    if (jwt) {
+    const token = localStorage.getItem("JWT");
+    if (token) {
       authApi
-        .checkToken(jwt)
+        .checkToken(token)
         .then(() => {
           setIsLoggedIn(true);
           api._token = token;
-          localStorage.setItem('token', jwt);
+          localStorage.setItem('token', token);
           //setUserEmail(res.data.email);
           history.push("/");
         })
