@@ -121,14 +121,16 @@ function App() {
   }
 
   useEffect(() => {
-    Promise.all([api.getUserInfo(localStorage.jwt), api.getInitialCards(localStorage.jwt)])
+    if (isLoggedIn) {
+      Promise.all([api.getUserInfo(localStorage.jwt), api.getInitialCards(localStorage.jwt)])
       .then(([data, cards]) => {
         setCurrentUser(data);
         setCards(cards);
       })
 
       .catch((err) => console.log(err));
-  }, []);
+    }
+  }, [isLoggedIn]);
 
   function handleSignOut() {
     localStorage.removeItem("jwt");
@@ -208,8 +210,11 @@ function App() {
           setIsLoggedIn(true) 
           history('/') 
         }) 
-        .catch((error) => { 
-          console.error(`Ошибка последующего входа ${error}`) 
+        .catch((err) => {
+          if (err.status === 400) {
+            console.log("400 — Токен не передан или передан не в том формате");
+          }
+          console.log("401 — Переданный токен некорректен");
         }) 
     } else { 
       setIsLoggedIn(false) 
