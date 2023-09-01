@@ -120,7 +120,7 @@ function App() {
   }
 
   useEffect(() => {
-    Promise.all([api.getUserInfo(), api.getInitialCards()])
+    Promise.all([api.getUserInfo("jwt"), api.getInitialCards()])
       .then(([data, cards]) => {
         setCurrentUser(data);
         setCards(cards);
@@ -182,9 +182,11 @@ function App() {
     if (jwt) {
       authApi
         .checkToken(jwt)
-        .then((res) => {
+        .then(() => {
           setIsLoggedIn(true);
-          setUserEmail(res.data.email);
+          api._token = token;
+          localStorage.setItem('token', jwt);
+          //setUserEmail(res.data.email);
           history.push("/");
         })
         .catch((err) => {
