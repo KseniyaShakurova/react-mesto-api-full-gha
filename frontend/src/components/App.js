@@ -90,14 +90,13 @@ function App() {
       .catch((err) => console.log(err));
   }
 
-  function handleAddPlaceSubmit(name, link, reset) {
+  function handleAddPlaceSubmit(data) {
 
     api
-      .createNewCard(name, link, localStorage.jwt)
+      .createNewCard(data, localStorage.jwt)
       .then((newCard) => {
         setCards([newCard, ...cards]);
         closeAllPopups();
-        reset()
       })
       .catch((err) => console.log(err));
   }
@@ -207,6 +206,7 @@ function App() {
       .checkToken(localStorage.jwt) 
         .then((res) => { 
           setUserEmail(res.email) 
+          localStorage.setItem('jwt', data.token);
           setIsLoggedIn(true) 
           history('/') 
         }) 

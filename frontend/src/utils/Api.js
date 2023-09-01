@@ -41,10 +41,13 @@ export default class Api {
     return fetch(`${this._baseUrl}/cards`, {
       method: "POST",
       headers: {
-        'Content-Type': "application/json",
+        'Content-Type': 'application/json',
         "Authorization" : `Bearer ${token}`
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify({
+        name: data.name,
+        link: data.link
+      })
     }).then(this._handleResponse);
   }
 
