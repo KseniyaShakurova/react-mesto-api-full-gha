@@ -1,7 +1,7 @@
 export default class Api {
   constructor(options) {
     this._baseUrl = options.baseUrl;
-    //this._headers = options.headers;
+    this._headers = options.headers;
   }
 
   _handleResponse(res) {
@@ -11,78 +11,61 @@ export default class Api {
     return res.json();
   }
 
-  getUserInfo(token) {
+  getUserInfo() {
     return fetch(`${this._baseUrl}/users/me`, {
-      headers: {
-        "Authorization" : `Bearer ${token}`
-      },
+      method: "GET",
+      headers: this._headers,
     }).then(this._handleResponse);
   }
 
-  getInitialCards(token) {
+  getInitialCards() {
     return fetch(`${this._baseUrl}/cards`, {
-      headers: {
-        "Authorization" : `Bearer ${token}`
-      },
+      method: "GET",
+      headers: this._headers,
     }).then(this._handleResponse);
   }
 
-  setUserInfo(data, token) {
+  setUserInfo(data) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: "PATCH",
-      headers: {
-        'Content-Type' : "application/json",
-        "Authorization" : `Bearer ${token}`
-      },
+      headers: this._headers,
       body: JSON.stringify(data),
     }).then(this._handleResponse);
   }
 
-  createNewCard(data, token) {
+  createNewCard(data) {
     return fetch(`${this._baseUrl}/cards`, {
       method: "POST",
-      headers: {
-        'Content-Type' : "application/json",
-        "Authorization" : `Bearer ${token}`
-      },
+      headers: this._headers,
       body: JSON.stringify(data),
     }).then(this._handleResponse);
   }
 
-  likeCard(data, token) {
+  likeCard(data) {
     return fetch(`${this._baseUrl}/cards/${data}/likes`, {
       method: "PUT",
-      headers: {
-        "Authorization" : `Bearer ${token}`
-      },
+      headers: this._headers,
     }).then(this._handleResponse);
   }
 
-  disLike(data, token) {
+  disLike(data) {
     return fetch(`${this._baseUrl}/cards/${data}/likes`, {
       method: "DELETE",
-      headers: {
-        "Authorization" : `Bearer ${token}`
-      },
+      headers: this._headers,
     }).then(this._handleResponse);
   }
 
-  deleteCard(data, token) {
+  deleteCard(data) {
     return fetch(`${this._baseUrl}/cards/${data}`, {
       method: "DELETE",
-      headers: {
-        "Authorization" : `Bearer ${token}`
-      },
+      headers: this._headers,
     }).then(this._handleResponse);
   }
 
-  updateAvatar(data, token) {
+  updateAvatar(data) {
     return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: "PATCH",
-      headers: {
-        'Content-Type' : "application/json",
-        "Authorization" : `Bearer ${token}`
-      },
+      headers: this._headers,
       body: JSON.stringify(data),
     }).then(this._handleResponse);
   }
@@ -90,7 +73,9 @@ export default class Api {
 }
 const api = new Api({
   baseUrl: "https://api.shakurovak.nomoredomainsicu.ru",
-
+  headers: {
+    'Content-Type': 'application/json',
+  },
 });
 
 export { api };

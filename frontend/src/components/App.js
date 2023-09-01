@@ -177,26 +177,23 @@ function App() {
   }
 
   useEffect(() => {
-    const token = localStorage.getItem("JWT");
-    if (token) {
+    const jwt = localStorage.getItem("jwt");
+    if (jwt) {
       authApi
-        .checkToken(token)
-        .then((data) => {
-          if(data.token) {
+        .checkToken(jwt)
+        .then((res) => {
           setIsLoggedIn(true);
-          api._token = token;
-          localStorage.setItem('jwt', data.token);
-          //setUserEmail(res.data.email);
+          setUserEmail(res.data.email);
           history.push("/");
-          return data.json()
-        } else {
-          return Promise.reject(`Ошибка: ${data.status}`);
-        }
         })
-        .then(({ data }) => setUserEmail(data.email))
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          if (err.status === 400) {
+            console.log("400 — Токен не передан или передан не в том формате");
+          }
+          console.log("401 — Переданный токен некорректен");
+        });
     }
-    }, []);
+  }, []);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
