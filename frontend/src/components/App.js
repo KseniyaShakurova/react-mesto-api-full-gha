@@ -59,7 +59,7 @@ function App() {
     const isLiked = card.likes.some((i) => i._id === currentUser._id);
     if (!isLiked) {
       api
-        .likeCard(card._id, !isLiked)
+        .likeCard(card._id, !isLiked, localStorage.jwt)
         .then((newCard) => {
           setCards((state) =>
             state.map((c) => (c._id === card._id ? newCard : c))
@@ -68,7 +68,7 @@ function App() {
         .catch((err) => console.log(err));
     } else {
       api
-        .disLike(card._id, !isLiked)
+        .disLike(card._id, !isLiked, localStorage.jwt)
         .then((newCard) => {
           setCards((state) =>
             state.map((c) => (c._id === card._id ? newCard : c))
@@ -80,7 +80,7 @@ function App() {
 
   function handleCardDelete(card) {
     api
-      .deleteCard(card._id)
+      .deleteCard(card._id, localStorage.jwt)
       .then((newCard) => {
         const newCards = cards.filter((c) =>
           c._id === card._id ? "" : newCard
@@ -90,19 +90,20 @@ function App() {
       .catch((err) => console.log(err));
   }
 
-  function handleAddPlaceSubmit(name, link) {
+  function handleAddPlaceSubmit(name, link, reset) {
 
     api
-      .createNewCard(name, link)
+      .createNewCard(name, link, localStorage.jwt)
       .then((newCard) => {
         setCards([newCard, ...cards]);
         closeAllPopups();
+        reset()
       })
       .catch((err) => console.log(err));
   }
 
   function handleUpdateUser(data) {
-    api.setUserInfo(data).then((res) => {
+    api.setUserInfo(data, localStorage.jwt).then((res) => {
       setCurrentUser(res);
       closeAllPopups();
     })
@@ -111,7 +112,7 @@ function App() {
 
   function handleUpdateAvatar(data) {
     api
-      .updateAvatar(data)
+      .updateAvatar(data, localStorage.jwt)
       .then((res) => {
         setCurrentUser(res);
         closeAllPopups();
@@ -120,7 +121,7 @@ function App() {
   }
 
   useEffect(() => {
-    Promise.all([api.getUserInfo("jwt"), api.getInitialCards()])
+    Promise.all([api.getUserInfo(localStorage.jwt), api.getInitialCards(localStorage.jwt)])
       .then(([data, cards]) => {
         setCurrentUser(data);
         setCards(cards);
@@ -177,7 +178,7 @@ function App() {
       });
   }
 
-  useEffect(() => {
+  /*useEffect(() => {
     const token = localStorage.getItem("JWT");
     if (token) {
       authApi
@@ -196,7 +197,23 @@ function App() {
           console.log("401 — Переданный токен некорректен");
         });
     }
-  }, []);
+  }, []);*/
+
+  useEffect(() => { 
+    if (localStorage.jwt) { 
+      checkToken(localStorage.jwt) 
+        .then((res) => { 
+          setUserEmail(res.data.email) 
+          setIsLoggedIn(true) 
+          navigate('/') 
+        }) 
+        .catch((error) => { 
+          console.error(`Ошибка последующего входа ${error}`) 
+        }) 
+    } else { 
+      setIsLoggedIn(false) 
+    }   
+  }, [])
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
