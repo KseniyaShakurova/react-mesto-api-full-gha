@@ -206,7 +206,7 @@ function App() {
       .checkToken(localStorage.jwt) 
         .then((res) => { 
           setUserEmail(res.email) 
-          localStorage.setItem('jwt', data.token);
+          localStorage.setItem('jwt', res.token);
           setIsLoggedIn(true) 
           history('/') 
         }) 
