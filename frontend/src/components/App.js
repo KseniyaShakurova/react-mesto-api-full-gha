@@ -204,7 +204,7 @@ function App() {
       authApi
       .checkToken(localStorage.jwt) 
         .then((res) => { 
-          setUserEmail(res.data.email) 
+          setUserEmail(res.email) 
           setIsLoggedIn(true) 
           history('/') 
         }) 
