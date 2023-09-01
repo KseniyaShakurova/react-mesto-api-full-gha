@@ -68,7 +68,7 @@ function App() {
         .catch((err) => console.log(err));
     } else {
       api
-        .disLike(card._id, jwt, !isLiked)
+        .disLike(card._id, token, !isLiked)
         .then((newCard) => {
           setCards((state) =>
             state.map((c) => (c._id === card._id ? newCard : c))
