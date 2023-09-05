@@ -1,0 +1,11 @@
+.header__info {
+    display: flex;
+    flex-direction: column;
+}
+
+@media (min-width: 767px) {
+    .header__info {
+        flex-direction: row;
+    } 
+        
+}

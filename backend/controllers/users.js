@@ -1,7 +1,8 @@
-const { NODE_ENV, JWT_SECRET } = process.env;
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+
+const { SECRET } = require('../utils/app.config');
 const User = require('../models/user');
 const BadRequest = require('../errors/BadRequest');
 const NotFound = require('../errors/NotFound');
@@ -50,8 +51,11 @@ const login = (req, res, next) => {
   return User.findUserByCredentials(email, password)
     .then((user) => {
       const payload = { _id: user._id };
-      const token = jwt.sign(payload, NODE_ENV === 'production' ? JWT_SECRET : 'some-secret-key', { expiresIn: '7d' });
+      const token = jwt.sign(payload, SECRET, { expiresIn: '7d' });
+      console.log(token);
+      console.log(SECRET);
       res.status(NotError).send({ token });
+      console.log(token);
     })
     .catch(next);
 };

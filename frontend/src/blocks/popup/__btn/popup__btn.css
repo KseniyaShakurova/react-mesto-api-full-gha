@@ -1,0 +1,29 @@
+.popup__btn {
+    background-image: url(../../../images/iconClose.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: rgba(0, 0, 0, .1);
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    border: 0;
+    position: absolute;
+    top: -36px;
+    right: 0;
+    cursor: pointer;
+    transition: opacity 1s ease;
+}
+
+.popup__btn:hover {
+   opacity: 0.6;
+}
+
+@media(min-width: 1023px) {
+    .popup__btn {
+        width: 32px;
+        height: 32px;
+        top: -35px;
+        right: -35px;
+        background-size: 32px;
+    }
+}

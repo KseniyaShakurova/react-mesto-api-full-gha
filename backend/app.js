@@ -9,10 +9,9 @@ const rateLimit = require('express-rate-limit');
 const newError = require('./middlewares/newError');
 const { createUser, login } = require('./controllers/users');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
-const routes = require('./routes');
 const { URL_REGEX } = require('./utils/constant');
 
-const { PORT = 3000, DB_URL = 'mongodb://127.0.0.1:27017/mestodb' } = process.env;
+const { PORT = 3001, DB_URL = 'mongodb://127.0.0.1:27017/mestodb' } = process.env;
 const app = express();
 
 app.use(cors());
@@ -50,7 +49,8 @@ app.post('/signin', celebrate({
   }),
 }), login);
 
-app.use(routes);
+app.use('/', require('./routes/index'));
+
 app.use(errorLogger);
 app.use(errors());
 app.use(newError);

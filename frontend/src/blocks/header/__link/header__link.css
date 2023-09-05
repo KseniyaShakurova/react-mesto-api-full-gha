@@ -1,0 +1,30 @@
+.header__link {
+    min-height: 17px;
+    height: 100%;
+    width: 100%;
+    color: #FFF;
+    text-align: right;
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin: 34px 30px 33px 0px;
+    text-decoration: none;
+}
+
+
+@media (min-width: 1023px) {
+    .header__link {
+        min-height: 22px;
+        font-size: 18px;
+        line-height: 22px
+    } 
+        
+}
+
+
+
+
+
+
