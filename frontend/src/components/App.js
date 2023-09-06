@@ -56,22 +56,22 @@ function App() {
   }
 
   function handleCardLike(card) {
-    const isLiked = card.likes.some((i) => i._id === currentUser._id);
-    if (!isLiked) {
+    const isLiked = card.likes.some((i) => i === currentUser._id);
+    if (isLiked) {
       api
-        .likeCard(card._id, !isLiked, localStorage.jwt)
-        .then((newCard) => {
+        .disLike(card._id, localStorage.jwt)
+        .then((res) => {
           setCards((state) =>
-            state.map((c) => (c._id === card._id ? newCard : c))
+            state.map((c) => (c._id === card._id ? res : c))
           );
         })
         .catch((err) => console.log(err));
     } else {
       api
-        .disLike(card._id, !isLiked, localStorage.jwt)
-        .then((newCard) => {
+        .likeCard(card._id, localStorage.jwt )
+        .then((res) => {
           setCards((state) =>
-            state.map((c) => (c._id === card._id ? newCard : c))
+            state.map((c) => (c._id === card._id ? res : c))
           );
         })
         .catch((err) => console.log(err));
@@ -90,26 +90,30 @@ function App() {
       .catch((err) => console.log(err));
   }
 
-  function handleAddPlaceSubmit(name, link, reset) {
+  function handleAddPlaceSubmit(dataCard) {
+    console.log(localStorage.jwt);
     api
-      .createNewCard(name, link, localStorage.jwt)
-      .then((newCard) => {
-        setCards([newCard, ...cards]);
+      .createNewCard(dataCard, localStorage.jwt)
+      .then((res) => {
+        setCards([res, ...cards]);
         closeAllPopups();
-        reset()
+        
       })
       .catch((err) => console.log(err));
   }
 
-  function handleUpdateUser(data) {
+  function handleUpdateUser(data, reset) {
+    
     api.setUserInfo(data, localStorage.jwt).then((res) => {
       setCurrentUser(res);
       closeAllPopups();
+      reset();
     })
     .catch((err) => console.log(err));
   }
 
   function handleUpdateAvatar(data) {
+    
     api
       .updateAvatar(data, localStorage.jwt)
       .then((res) => {
@@ -120,13 +124,14 @@ function App() {
   }
 
   useEffect(() => {
-    if (isLoggedIn){
-      console.log(localStorage.jwt);
+    if (isLoggedIn)  {
+      
     Promise.all([api.getUserInfo(localStorage.jwt), api.getInitialCards(localStorage.jwt)])
-      .then(([data, cards]) => {
-        setCurrentUser(data);
-        setCards(cards);
+    
+       .then(([data, cards]) => {
         
+        setCurrentUser(data.data);
+        setCards(cards);
       })
       .catch((err) => console.log(err));
     }
@@ -164,7 +169,7 @@ function App() {
       .loginUser(email, password)
       .then((data) => {
           localStorage.setItem('jwt', data.token);
-          console.log(data);
+          
           setUserEmail(email);
           setIsLoggedIn(true);
           history.push("/");
@@ -180,7 +185,7 @@ function App() {
       });
   }
 
-  /*useEffect(() => {
+/*useEffect(() => {
     const token = localStorage.getItem('jwt');
     console.log(token);
     if (token) {
@@ -211,7 +216,7 @@ function App() {
           console.log(`Ошибка: ${err.status}`);
         });
     }
-  }, []);
+  }, [history]);
 
 
 

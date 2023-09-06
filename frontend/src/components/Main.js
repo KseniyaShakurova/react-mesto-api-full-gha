@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import Card from "./Card";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
@@ -12,7 +12,7 @@ function Main({
   cards,
 }) {
   const currentUser = useContext(CurrentUserContext);
-
+  
   return (
     <main className="content">
       <section className="profile">
@@ -22,6 +22,7 @@ function Main({
             onClick={onEditAvatar}
             src={currentUser.avatar}
             alt={currentUser.name}
+            
           />
         </div>
         <div className="profile__info">

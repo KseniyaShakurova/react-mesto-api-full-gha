@@ -12,7 +12,6 @@ export default class Api {
 
   getUserInfo(token) {
     
-    console.log(token);
     return fetch(`${this._baseUrl}/users/me`, {
       method: "GET",
       headers: {
@@ -23,6 +22,7 @@ export default class Api {
   }
 
   getInitialCards(token) {
+    
     return fetch(`${this._baseUrl}/cards`, {
       headers: {
         "Authorization" : `Bearer ${token}`
@@ -31,7 +31,7 @@ export default class Api {
   }
 
   setUserInfo(data, token) {
-    console.log(token);
+    
     return fetch(`${this._baseUrl}/users/me`, {
       method: "PATCH", 
       headers: {
@@ -43,26 +43,29 @@ export default class Api {
   }
 
   createNewCard(data, token) {
+    console.log(token);
     return fetch(`${this._baseUrl}/cards`, {
       method: "POST", 
       headers: {
-        'Content-Type': 'application/json',
-        "Authorization" : `Bearer ${token}`
+        'Content-Type' : "application/json",
+            "Authorization" : `Bearer ${token}`
       },
       body: JSON.stringify(data),
     }).then(this._handleResponse);
   }
 
   likeCard(data, token) {
+    
     return fetch(`${this._baseUrl}/cards/${data}/likes`, {
       method: "PUT",
       headers: {
         "Authorization" : `Bearer ${token}`
-     }
+    },
     }).then(this._handleResponse);
   }
 
   disLike(data, token) {
+    console.log(token)
     return fetch(`${this._baseUrl}/cards/${data}/likes`, {
       method: "DELETE",
       headers: {
@@ -93,8 +96,8 @@ export default class Api {
   
 }
 const api = new Api({
-  //baseUrl: "http://localhost:3001",
-  baseUrl: "https://api.shakurovak.nomoredomainsicu.ru",
+  baseUrl: "http://localhost:3001",
+  //baseUrl: "https://api.shakurovak.nomoredomainsicu.ru",
  /* headers: {
     authorization: "aa98c8c5-50a3-4af7-9387-defe134c3e66",
     "Content-Type": "application/json",
