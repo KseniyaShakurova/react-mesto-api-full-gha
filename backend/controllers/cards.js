@@ -51,7 +51,7 @@ const likeCard = (req, res, next) => {
   )
     .then((card) => {
       if (!card) {
-        throw new NotFound('Передан несуществующий _id карточки.');
+        throw new NotFound('Передан несуществующий id карточки.');
       }
       return res.status(NotError).send(card);
     })
