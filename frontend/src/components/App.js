@@ -105,7 +105,7 @@ function App() {
   function handleUpdateUser(data, reset) {
     
     api.setUserInfo(data, localStorage.jwt).then((res) => {
-      setCurrentUser(res);
+      setCurrentUser(res.data);
       closeAllPopups();
       reset();
     })
@@ -117,7 +117,7 @@ function App() {
     api
       .updateAvatar(data, localStorage.jwt)
       .then((res) => {
-        setCurrentUser(res);
+        setCurrentUser(res.data);
         closeAllPopups();
       })
       .catch((err) => console.log(err));
