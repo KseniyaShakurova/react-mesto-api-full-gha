@@ -102,12 +102,11 @@ function App() {
       .catch((err) => console.log(err));
   }
 
-  function handleUpdateUser(data, reset) {
+  function handleUpdateUser(data) {
     
     api.setUserInfo(data, localStorage.jwt).then((res) => {
       setCurrentUser(res.data);
       closeAllPopups();
-      reset();
     })
     .catch((err) => console.log(err));
   }
