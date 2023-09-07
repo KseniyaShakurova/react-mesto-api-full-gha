@@ -7,7 +7,7 @@
 
 Адрес репозитория: https://github.com/KseniyaShakurova/react-mesto-api-full-gha
 
-## Ссылки на проект Яндекс.Практика
+## Ссылки на проект 
 
 IP 158.160.107.50
 
