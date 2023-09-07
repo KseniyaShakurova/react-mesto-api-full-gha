@@ -44,8 +44,8 @@ class Auth {
   }
 }
 
-//const authApi = new Auth("https://api.shakurovak.nomoredomainsicu.ru");
-const authApi = new Auth("http://localhost:3001");
+const authApi = new Auth("https://api.shakurovak.nomoredomainsicu.ru");
+//const authApi = new Auth("http://localhost:3001");
 export default authApi;
 
    

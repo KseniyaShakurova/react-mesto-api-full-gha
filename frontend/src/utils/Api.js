@@ -96,8 +96,8 @@ export default class Api {
   
 }
 const api = new Api({
-  baseUrl: "http://localhost:3001",
-  //baseUrl: "https://api.shakurovak.nomoredomainsicu.ru",
+  //baseUrl: "http://localhost:3001",
+  baseUrl: "https://api.shakurovak.nomoredomainsicu.ru",
  /* headers: {
     authorization: "aa98c8c5-50a3-4af7-9387-defe134c3e66",
     "Content-Type": "application/json",
